@@ -7,7 +7,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "stylelint": "stylelint '**/*.{css,scss}' --allow-empty-input",
-    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
+    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
+    "sass": "sass src/sass:src/css --watch"
   },
   "keywords": [],
   "author": "",
