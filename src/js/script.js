@@ -15,13 +15,20 @@
       // Render product in the menu (creates thisProduct.element)
       thisProduct.renderInMenu();
 
+      // Cache DOM references for later use
+      thisProduct.getElements();
+
       // Initialize accordion behavior right after rendering
       thisProduct.initAccordion();
+
+      // Call newly created methods (as required by the task)
+      thisProduct.initOrderForm();
+      thisProduct.processOrder();
 
       console.log('new Product:', thisProduct);
     }
 
-    // Will render this product into the menu
+    // Render this product into the menu
     renderInMenu() {
       const thisProduct = this;
 
@@ -38,30 +45,73 @@
       menuContainer.appendChild(thisProduct.element);
     }
 
+    // Collect and cache DOM references (run once per product)
+    getElements() {
+      const thisProduct = this;
+
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    }
+
     // Sets up accordion
     initAccordion() {
       const thisProduct = this;
 
-      /* find the clickable trigger (the element that should react to clicking) */
-      const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      if (!clickableTrigger) return;
+      // Use the reference prepared in getElements()
+      if (!thisProduct.accordionTrigger) return;
 
-      /* START: add event listener to clickable trigger on event click */
-      clickableTrigger.addEventListener('click', function (event) {
-        /* prevent default action for event */
+      thisProduct.accordionTrigger.addEventListener('click', function (event) {
+        // prevent default action for event
         event.preventDefault();
 
-        /* find active product (product that has active class) */
+        // find active product (product that has active class)
         const activeProduct = document.querySelector(select.all.menuProductsActive);
 
-        /* if there is active product and it's not thisProduct.element, remove class active from it */
+        // if there is active product and it's not thisProduct.element, remove class active from it
         if (activeProduct && activeProduct !== thisProduct.element) {
           activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
         }
 
-        /* toggle active class on thisProduct.element */
+        // toggle active class on thisProduct.element
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
       });
+    }
+
+    // Add event listeners to the form, its inputs, and the add-to-cart button
+    initOrderForm() {
+      const thisProduct = this;
+
+      // Prevent default form submission and recompute price
+      thisProduct.form.addEventListener('submit', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+
+      // Recompute price on any input change
+      for (let input of thisProduct.formInputs) {
+        input.addEventListener('change', function(){
+          thisProduct.processOrder();
+        });
+      }
+
+      // Prevent default link behavior and recompute price on add-to-cart click
+      thisProduct.cartButton.addEventListener('click', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+    }
+
+    // Compute order (for now: log form data)
+    processOrder() {
+      const thisProduct = this;
+      console.log('processOrder');
+
+      // Read current form values as an object
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData', formData);
     }
   }
 
