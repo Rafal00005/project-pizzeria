@@ -8,7 +8,8 @@
     "lint:fix": "eslint . --fix",
     "stylelint": "stylelint '**/*.{css,scss}' --allow-empty-input",
     "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
-    "sass": "sass src/sass:src/css --watch"
+    "sass": "sass src/sass:src/css --watch",
+    "start": "live-server src"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
   "description": "",
   "devDependencies": {
     "eslint": "^8.56.0",
+    "live-server": "^1.2.2",
     "stylelint": "^16.24.0",
     "stylelint-config-standard": "^39.0.0"
   }
