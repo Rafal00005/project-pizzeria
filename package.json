@@ -1,23 +1,22 @@
 {
-  "name": "project-template",
+  "name": "project-pizzeria",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
+  "license": "ISC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server src --port=5173",
+    "sass": "sass src/sass:src/css --watch",
+    "build:css": "sass src/sass:src/css --style=compressed",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "stylelint": "stylelint '**/*.{css,scss}' --allow-empty-input",
-    "stylelint:fix": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
-    "sass": "sass src/sass:src/css --watch",
-    "start": "live-server src"
+    "stylelint": "stylelint \"**/*.{css,scss}\" --allow-empty-input",
+    "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix --allow-empty-input"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "eslint": "^8.56.0",
     "live-server": "^1.2.2",
+    "sass": "^1.77.0",
     "stylelint": "^16.24.0",
     "stylelint-config-standard": "^39.0.0"
   }
